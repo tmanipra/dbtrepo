@@ -1,0 +1,14 @@
+[0m22:31:29.552088 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f0f26c9d250>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f0f24e1e610>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f0f24e1e9a0>]}
+
+
+============================== 22:31:29.556269 | 610a7aaa-013d-4a1d-9e0c-73b7f72e5162 ==============================
+[0m22:31:29.556269 [info ] [MainThread]: Running with dbt=1.5.2
+[0m22:31:29.556774 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'fail_fast': 'False', 'debug': 'False', 'log_path': 'logs', 'version_check': 'True', 'profiles_dir': '/home/prakash/.dbt', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'log_format': 'default', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'introspect': 'True', 'target_path': 'None', 'send_anonymous_usage_stats': 'True'}
+[0m22:31:29.557393 [error] [MainThread]: Encountered an error:
+Runtime Error
+  No dbt_project.yml found at expected path /home/prakash/dbtrepo/.github/workflows/dbt_project.yml
+  Verify that each entry within packages.yml (and their transitive dependencies) contains a file named dbt_project.yml
+  
+[0m22:31:29.558233 [debug] [MainThread]: Command `dbt deps` failed at 22:31:29.558073 after 0.04 seconds
+[0m22:31:29.558586 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f0f26c9d250>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f0f291fe910>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7f0f24e4cc70>]}
+[0m22:31:29.558994 [debug] [MainThread]: Flushing usage events
