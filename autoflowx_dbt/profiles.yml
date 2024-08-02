@@ -1,0 +1,14 @@
+my_dbt_project:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      project: global-sign-431120-i5
+      dataset: autoflowx_staging
+      keyfile: /tmp/service_account_key.json
+      location: europe-west2
+      threads: 4
+      timeout_seconds: 60
+      priority: interactive
+      retries: 1
