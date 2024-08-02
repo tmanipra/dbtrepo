@@ -33,7 +33,7 @@ jobs:
         run: echo "${{ secrets.GOOGLE_CREDENTIALS }}" > /tmp/service_account_key.json
 
       - name: Configure gcloud auth
-        run: echo ${{ secrets.GOOGLE_CREDENTIALS }} | gcloud auth activate-service-account --key-file=/tmp/service_account_key.json
+        run: gcloud auth activate-service-account --key-file=/tmp/service_account_key.json
 
       - name: Run dbt
         run: |
