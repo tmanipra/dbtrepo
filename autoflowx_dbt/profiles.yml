@@ -6,9 +6,21 @@ autoflowx_dbt:
       method: service-account
       project: global-sign-431120-i5
       dataset: autoflowx_staging
-      keyfile: /tmp/service_account_key.json
+      keyfile: /home/prakash/service_account_key.json
       location: europe-west2
       threads: 4
       timeout_seconds: 60
+      priority: interactive
+      retries: 1
+
+    landing:
+      type: bigquery
+      method: service-account
+      project: global-sign-431120-i5
+      dataset: autoflowx_landing
+      keyfile: /home/prakash/service_account_keyfile.json
+      location: europe-west2
+      threads: 4
+      timeout_seconds: 300
       priority: interactive
       retries: 1
