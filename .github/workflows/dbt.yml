@@ -29,11 +29,8 @@ jobs:
           service_account_key: ${{ secrets.GOOGLE_CREDENTIALS }}
           export_default_credentials: true
       
-      - name: Debug service account key
-        run: echo "${{ secrets.GOOGLE_CREDENTIALS }}"
-
       - name: Create service account key file
-        run: echo "${{ secrets.GOOGLE_CREDENTIALS }}" | jq . > /tmp/service_account_key.json
+        run: echo "${{ secrets.GOOGLE_CREDENTIALS }}" | base64 --decode > /tmp/service_account_key.json
 
       - name: Check service account key file
         run: cat /tmp/service_account_key.json
