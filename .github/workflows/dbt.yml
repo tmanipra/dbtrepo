@@ -1,0 +1,52 @@
+name: dbt Build and Push
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Install dbt
+        run: |
+          pip install dbt-bigquery
+
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          project_id: ${{ secrets.GOOGLE_PROJECT }}
+          service_account_key: ${{ secrets.GOOGLE_CREDENTIALS }}
+          export_default_credentials: true
+
+      - name: Configure gcloud auth
+        run: echo ${{ secrets.GOOGLE_CREDENTIALS }} | gcloud auth activate-service-account --key-file=-
+
+      - name: Create service account key file
+        run: echo "${{ secrets.GOOGLE_CREDENTIALS }}" > /tmp/service_account_key.json
+
+      - name: Run dbt
+        run: |
+          dbt deps
+          dbt build
+        env:
+          DBT_PROFILES_DIR: ${{ github.workspace }}/
+
+      - name: Build Docker image
+        run: |
+          echo ${{ secrets.GOOGLE_CREDENTIALS }} | docker login -u _json_key --password-stdin https://europe-west2-docker.pkg.dev
+          docker build -t europe-west2-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT }}/my-repo/dbt-model:latest .
+
+      - name: Push Docker image to Artifact Registry
+        run: |
+          docker push europe-west2-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT }}/my-repo/dbt-model:latest
