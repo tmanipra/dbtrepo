@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: autoflowx
+    description: "A table to store load date, load time, and file name"
+    columns:
+      - name: load_date
+        description: "The date the data was loaded"
+        tests:
+          - not_null
+      - name: load_time
+        description: "The timestamp the data was loaded"
+        tests:
+          - not_null
+      - name: file_name
+        description: "The name of the file loaded"
+        tests:
+          - not_null
