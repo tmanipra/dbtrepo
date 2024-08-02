@@ -1,4 +1,4 @@
-my_dbt_project:
+autoflowx_dbt:
   target: dev
   outputs:
     dev:
