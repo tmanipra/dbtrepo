@@ -47,8 +47,8 @@ jobs:
       - name: Run dbt
         run: |
           pwd
-          ls -lrt
           cd autoflowx_dbt
+          ls -lrt
           dbt deps
           dbt build --full-refresh --target dev
         env:
