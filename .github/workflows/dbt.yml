@@ -52,7 +52,7 @@ jobs:
           dbt deps
           dbt build --full-refresh --target dev
         env:
-          DBT_PROFILES_DIR: ${{ github.workspace }}/
+          DBT_PROFILES_DIR: ${{ github.workspace }}/autoflowx_dbt
 
       - name: Build Docker image
         run: |
