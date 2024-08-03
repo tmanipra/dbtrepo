@@ -6,7 +6,7 @@ autoflowx_dbt:
       method: service-account
       project: global-sign-431120-i5
       dataset: autoflowx_staging
-      keyfile: /home/prakash/service_account_key.json
+      keyfile: /home/runner/work/dbtrepo/dbtrepo/file.json
       location: europe-west2
       threads: 4
       timeout_seconds: 60
@@ -18,7 +18,7 @@ autoflowx_dbt:
       method: service-account
       project: global-sign-431120-i5
       dataset: autoflowx_landing
-      keyfile: /home/prakash/service_account_keyfile.json
+      keyfile: /home/runner/work/dbtrepo/dbtrepo/file.json
       location: europe-west2
       threads: 4
       timeout_seconds: 300
