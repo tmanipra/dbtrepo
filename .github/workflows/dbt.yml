@@ -23,11 +23,6 @@ jobs:
           workload_identity_provider: 'projects/global-sign-431120-i5/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
           service_account: 'tfgitworkflow@global-sign-431120-i5.iam.gserviceaccount.com'
 
-      - name: Configure gcloud
-        run: |
-          gcloud config set global-sign-431120-i5
-          gcloud config set compute/zone europe-west2
-
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
@@ -47,8 +42,8 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t europe-west2-docker.pkg.dev/global-sign-431120-i5/dbt-model:latest .
+          docker build -t europe-west2-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT }}/dbt-model:latest .
 
       - name: Push Docker image to Artifact Registry
         run: |
-          docker push europe-west2-docker.pkg.dev/global-sign-431120-i5/dbt-model:latest
+          docker push europe-west2-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT }}/dbt-model:latest
