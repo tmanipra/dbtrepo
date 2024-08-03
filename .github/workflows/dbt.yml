@@ -26,23 +26,23 @@ jobs:
         uses: google-github-actions/setup-gcloud@v1
         with:
           project_id: ${{ secrets.GOOGLE_PROJECT }}
-          service_account_key: ${{ secrets.GOOGLE_CREDENTIALS }}
+          service_account_key: "${path.module}/file.json"
           export_default_credentials: true
 
-      - name: Decode GCP Service Account Key
-        run: |
-          echo ${{ secrets.GOOGLE_BASE64 }} | base64 --decode > /tmp/service_account_key.json
+  #    - name: Decode GCP Service Account Key
+   #     run: |
+    #      echo ${{ secrets.GOOGLE_BASE64 }} | base64 --decode > /tmp/service_account_key.json
       
 #      - name: Create service account key file
 #        run: echo "${{ secrets.GOOGLE_CREDENTIALS }}" | base64 --decode > /tmp/service_account_key.json
 
-      - name: Check service account key file
-        run: cat /tmp/service_account_key.json
+     # - name: Check service account key file
+     #   run: cat /tmp/service_account_key.json
    #   - name: Create service account key file
    #     run: echo "${{ secrets.GOOGLE_CREDENTIALS }}" > /tmp/service_account_key.json
 
       - name: Configure gcloud auth
-        run: gcloud auth activate-service-account --key-file=/tmp/service_account_key.json
+        run: gcloud auth activate-service-account --key-file="${path.module}/file.json"
 
       - name: Run dbt
         run: |
