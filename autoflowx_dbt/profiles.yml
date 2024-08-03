@@ -3,10 +3,9 @@ autoflowx_dbt:
   outputs:
     dev:
       type: bigquery
-      method: service-account
+      method: oauth
       project: global-sign-431120-i5
       dataset: autoflowx_staging
-      keyfile: /home/runner/work/dbtrepo/dbtrepo/file.json
       location: europe-west2
       threads: 4
       timeout_seconds: 60
@@ -15,10 +14,9 @@ autoflowx_dbt:
 
     landing:
       type: bigquery
-      method: service-account
+      method: oauth
       project: global-sign-431120-i5
       dataset: autoflowx_landing
-      keyfile: /home/runner/work/dbtrepo/dbtrepo/file.json
       location: europe-west2
       threads: 4
       timeout_seconds: 300
