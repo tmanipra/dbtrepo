@@ -1,4 +1,4 @@
-name: dbt Build and Push
+name: CI
 
 on:
   push:
@@ -9,46 +9,37 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    permissions:
+      id-token: write
+      contents: read
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
+        with:
+          workload_identity_provider: 'projects/global-sign-431120-i5/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
+          service_account: 'tfgitworkflow@global-sign-431120-i5.iam.gserviceaccount.com'
+
+      - name: Configure gcloud
+        run: |
+          gcloud config set global-sign-431120-i5
+          gcloud config set compute/zone europe-west2
+
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.8
+          python-version: '3.8'
 
       - name: Install dbt
         run: |
           pip install dbt-bigquery
 
-      - name: Set up Google Cloud SDK
-        uses: google-github-actions/setup-gcloud@v1
-        with:
-          project_id: ${{ secrets.GOOGLE_PROJECT }}
-          service_account_key: ${{ github.workspace }}/file.json
-          export_default_credentials: true
-
-  #    - name: Decode GCP Service Account Key
-   #     run: |
-    #      echo ${{ secrets.GOOGLE_BASE64 }} | base64 --decode > /tmp/service_account_key.json
-      
-#      - name: Create service account key file
-#        run: echo "${{ secrets.GOOGLE_CREDENTIALS }}" | base64 --decode > /tmp/service_account_key.json
-
-     # - name: Check service account key file
-     #   run: cat /tmp/service_account_key.json
-   #   - name: Create service account key file
-   #     run: echo "${{ secrets.GOOGLE_CREDENTIALS }}" > /tmp/service_account_key.json
-
-  #    - name: Configure gcloud auth
-  #      run: gcloud auth activate-service-account --key-file="${path.module}/file.json"
-
       - name: Run dbt
         run: |
-          pwd
           cd autoflowx_dbt
-          ls -lrt
           dbt deps
           dbt build --full-refresh --target dev
         env:
@@ -56,7 +47,6 @@ jobs:
 
       - name: Build Docker image
         run: |
-          gcloud auth activate-service-account --key-file=${{ github.workspace }}/file.json
           docker build -t europe-west2-docker.pkg.dev/global-sign-431120-i5/dbt-model:latest .
 
       - name: Push Docker image to Artifact Registry
