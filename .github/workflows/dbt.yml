@@ -21,10 +21,9 @@ jobs:
         name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v1'
         with:
-          workload_identity_provider: "projects/378969527341/locations/global/workloadIdentityPools/github/providers/global-sign-431120-i5"
-          service_account: "tfgitworkflow@global-sign-431120-i5.iam.gserviceaccount.com"
-          token_format: 'access_token'
-         # audience: '//iam.googleapis.com/projects/378969527341/locations/global/workloadIdentityPools/github/providers/global-sign-431120-i5'
+          create_credentials_file: true
+          workload_identity_provider: 'projects/378969527341/locations/global/workloadIdentityPools/github/providers/global-sign-431120-i5'
+          service_account: 'tfgitworkflow@global-sign-431120-i5.iam.gserviceaccount.com'
 
       - name: Set up Python
         uses: actions/setup-python@v2
