@@ -15,14 +15,16 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Authenticate to Google Cloud
-        uses: google-github-actions/auth@v1
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v2'
         with:
-          workload_identity_provider: 'projects/378969527341/locations/global/workloadIdentityPools/github/providers/global-sign-431120-i5'
-          service_account: 'tfgitworkflow@global-sign-431120-i5.iam.gserviceaccount.com'
-          audience: '//iam.googleapis.com/projects/378969527341/locations/global/workloadIdentityPools/github/providers/global-sign-431120-i5'
+          workload_identity_provider: "projects/378969527341/locations/global/workloadIdentityPools/github/providers/github-provider"
+          service_account: "tfgitworkflow@global-sign-431120-i5.iam.gserviceaccount.com"
+          token_format: 'access_token'
+#          audience: '//iam.googleapis.com/projects/378969527341/locations/global/workloadIdentityPools/github/providers/global-sign-431120-i5'
 
       - name: Set up Python
         uses: actions/setup-python@v2
