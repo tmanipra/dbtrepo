@@ -34,18 +34,22 @@ jobs:
         run: |
           pip install dbt-bigquery
 
-      - name: Run dbt
-        run: |
-          cd autoflowx_dbt
-          dbt deps
-          dbt build --full-refresh --target dev
-        env:
-          DBT_PROFILES_DIR: ${{ github.workspace }}/autoflowx_dbt
+      - name: "Set up Cloud SDK"
+        uses: google-github-actions/setup-gcloud@v1
 
-      - name: Build Docker image
-        run: |
-          docker build -t europe-west2-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT }}/dbt-model:latest .
+      - name: "Use gcloud CLI"
+        run: gcloud info
 
-      - name: Push Docker image to Artifact Registry
+      - name: "Docker auth"
         run: |
-          docker push europe-west2-docker.pkg.dev/${{ secrets.GOOGLE_PROJECT }}/dbt-model:latest
+          gcloud auth configure-docker europe-west2-docker.pkg.dev
+
+      - name: Build image
+        run: |
+            cd autoflowx_dbt
+            docker build . --file Dockerfile --tag $$:$ --build-arg PKG=$
+        working-directory: ./autoflowx_dbt
+
+      - name: Push image
+        run: |
+            docker push $$:$
