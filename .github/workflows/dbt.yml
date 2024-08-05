@@ -44,12 +44,16 @@ jobs:
         run: |
           gcloud auth configure-docker europe-west2-docker.pkg.dev
 
+      - name: "Docker auth"
+        run: |
+          gcloud auth configure-docker europe-west2-docker.pkg.dev
+
       - name: Build image
         run: |
-            cd autoflowx_dbt
-            docker build . --file Dockerfile --tag $$:$ --build-arg PKG=$
+          cd autoflowx_dbt
+          docker build . --file Dockerfile --tag my-image:latest --build-arg PKG=my-package
         working-directory: ./autoflowx_dbt
 
       - name: Push image
         run: |
-            docker push $$:$
+          docker push my-image:latest
