@@ -50,9 +50,10 @@ jobs:
 
       - name: Build image
         run: |
+          pwd
           cd autoflowx_dbt
           docker build . --file Dockerfile --tag my-image:latest --build-arg PKG=my-package
-        working-directory: ./autoflowx_dbt
+        working-directory: ${{ github.workspace }}/autoflowx_dbt
 
       - name: Push image
         run: |
