@@ -11,6 +11,7 @@ autoflowx_dbt:
       timeout_seconds: 60
       priority: interactive
       retries: 1
+      impersonate_service_account: tfgitworkflow@global-sign-431120-i5.iam.gserviceaccount.com 
 
     landing:
       type: bigquery
@@ -22,3 +23,4 @@ autoflowx_dbt:
       timeout_seconds: 300
       priority: interactive
       retries: 1
+      impersonate_service_account: tfgitworkflow@global-sign-431120-i5.iam.gserviceaccount.com
