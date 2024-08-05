@@ -8,7 +8,7 @@ COPY ${PKG} /app
 
 RUN pip install -r requirements.txt
 
-RUN chmod +x ./autoflowx_dbt/script.sh
+RUN chmod +x ./script.sh
 
-ENTRYPOINT ["./autoflowx_dbt/script.sh"]
+ENTRYPOINT ["./script.sh"]
 
