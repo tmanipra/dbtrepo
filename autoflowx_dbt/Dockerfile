@@ -4,9 +4,8 @@ ARG PKG
 
 WORKDIR /app
 
-COPY ${PKG} /app
+COPY ${PKG} /app/${PKG}
 
-RUN chmod +x ./script.sh
+RUN chmod +x /app/${PKG}/script.sh
 
-ENTRYPOINT ["./script.sh"]
-
+ENTRYPOINT ["/app/${PKG}/script.sh"]
