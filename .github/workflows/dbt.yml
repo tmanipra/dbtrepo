@@ -40,6 +40,10 @@ jobs:
       - name: "Use gcloud CLI"
         run: gcloud info
 
+      - name: "Docker auth"
+        run: |
+         gcloud auth configure-docker europe-west2-docker.pkg.dev
+
       - name: Build image
         run: |
           pwd
