@@ -24,6 +24,7 @@ jobs:
           create_credentials_file: true
           workload_identity_provider: 'projects/378969527341/locations/global/workloadIdentityPools/github/providers/global-sign-431120-i5'
           service_account: 'tfgitworkflow@global-sign-431120-i5.iam.gserviceaccount.com'
+          access_token_lifetime: 300s
 
       - name: Set up Python
         uses: actions/setup-python@v2
