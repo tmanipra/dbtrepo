@@ -1,38 +1,38 @@
-name: CI
-
+name: Release
 on:
   push:
-    branches:
-      - main
 
 jobs:
-  build:
+  docker-release:
+    name: Tagged Docker release to Google Artifact Registry
     runs-on: ubuntu-latest
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')  # <-- Notice that I'm filtering here to only run when a tagged commit is pushed
 
     permissions:
-      id-token: write
-      contents: read
+      contents: 'read'
+      id-token: 'write'
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - id: checkout
+        name: Checkout
+        uses: actions/checkout@v2
 
-      - id: 'auth'
-        name: 'Authenticate to Google Cloud'
-        uses: 'google-github-actions/auth@v1'
+      - id: auth
+        name: Authenticate with Google Cloud
+        uses: google-github-actions/auth@v0
         with:
           token_format: access_token
-          workload_identity_provider: 'projects/378969527341/locations/global/workloadIdentityPools/github/providers/global-sign-431120-i5'
-          service_account: 'tfgitworkflow@global-sign-431120-i5.iam.gserviceaccount.com'
+          workload_identity_provider: projects/378969527341/locations/global/workloadIdentityPools/my-pool/providers/my-provider
+          service_account: gitworkflow@global-sign-431120-i5.iam.gserviceaccount.com
           access_token_lifetime: 300s
 
       - name: Login to Artifact Registry
         uses: docker/login-action@v1
         with:
-          registry: europe-west2-docker.pkg.dev
+          registry: us-west2-docker.pkg.dev
           username: oauth2accesstoken
           password: ${{ steps.auth.outputs.access_token }}
-
+		  
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
@@ -41,19 +41,10 @@ jobs:
       - name: Install dbt
         run: |
           pip install dbt-bigquery
-
-      - name: "Set up Cloud SDK"
-        uses: google-github-actions/setup-gcloud@v1
-
-      - name: "Use gcloud CLI"
-        run: gcloud info
-
+		  
       - name: Build image
         run: |
           pwd
-          gcloud auth configure-docker europe-west2-docker.pkg.dev --quiet
           docker build . --file Dockerfile --tag europe-west2-docker.pkg.dev/global-sign-431120-i5/dbt/image:latest --build-arg PKG=autoflowx_dbt
           docker push europe-west2-docker.pkg.dev/global-sign-431120-i5/dbt/image:latest
         working-directory: ${{ github.workspace }}/autoflowx_dbt
-
-      
