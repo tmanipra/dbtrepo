@@ -1,16 +1,17 @@
-name: Release
+name: CI
+
 on:
   push:
+    branches:
+      - main
 
 jobs:
-  docker-release:
-    name: Tagged Docker release to Google Artifact Registry
+  build:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')  # <-- Notice that I'm filtering here to only run when a tagged commit is pushed
 
     permissions:
-      contents: 'read'
-      id-token: 'write'
+      id-token: write
+      contents: read
 
     steps:
       - id: checkout
