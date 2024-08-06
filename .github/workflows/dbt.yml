@@ -32,7 +32,7 @@ jobs:
           registry: us-west2-docker.pkg.dev
           username: oauth2accesstoken
           password: ${{ steps.auth.outputs.access_token }}
-		  
+  
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
@@ -41,7 +41,7 @@ jobs:
       - name: Install dbt
         run: |
           pip install dbt-bigquery
-		  
+  
       - name: Build image
         run: |
           pwd
