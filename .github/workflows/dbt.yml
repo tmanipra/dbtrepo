@@ -40,16 +40,12 @@ jobs:
       - name: "Use gcloud CLI"
         run: gcloud info
 
-
-
       - name: Build image
         run: |
           pwd
+          gcloud auth configure-docker europe-west2-docker.pkg.dev --quiet
           docker build . --file Dockerfile --tag europe-west2-docker.pkg.dev/global-sign-431120-i5/dbt/image:latest --build-arg PKG=autoflowx_dbt
+          docker push europe-west2-docker.pkg.dev/global-sign-431120-i5/dbt/image:latest
         working-directory: ${{ github.workspace }}/autoflowx_dbt
 
-      - name: Push image
-        run: |
-         gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://europe-west2-docker.pkg.dev
-         docker push europe-west2-docker.pkg.dev/global-sign-431120-i5/dbt/image:latest
       
