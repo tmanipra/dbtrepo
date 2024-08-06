@@ -43,6 +43,7 @@ jobs:
       - name: "Docker auth"
         run: |
          gcloud auth configure-docker europe-west2-docker.pkg.dev --quiet
+         docker push europe-west2-docker.pkg.dev/global-sign-431120-i5/dbt/image:latest
 
       - name: Build image
         run: |
@@ -52,4 +53,9 @@ jobs:
 
       - name: Push image
         run: |
-          gcloud auth print-access-token --impersonate-service-account tfgitworkflow@global-sign-431120-i5.iam.gserviceaccount.com
+          pwd
+          ls -lrt
+          echo "*****END*******"
+          ###gcloud auth print-access-token --impersonate-service-account tfgitworkflow@global-sign-431120-i5.iam.gserviceaccount.com
+          gcloud auth configure-docker europe-west2-docker.pkg.dev --quiet
+          docker push europe-west2-docker.pkg.dev/global-sign-431120-i5/dbt/image:latest
