@@ -50,13 +50,6 @@ jobs:
           docker build . --file Dockerfile --tag europe-west2-docker.pkg.dev/global-sign-431120-i5/dbt/image:latest --build-arg PKG=autoflowx_dbt
         working-directory: ${{ github.workspace }}/autoflowx_dbt
 
-      - name: Login to GAR
-        uses: docker/login-action@v3
-        with:
-          registry: europe-west2-docker.pkg.dev
-          username: oauth2accesstoken
-          password: ${{ steps.auth.outputs.access_token }}
-
       - name: Push image
         run: |
           echo "$(gcloud auth print-access-token --impersonate-service-account tfgitworkflow@global-sign-431120-i5.iam.gserviceaccount.com)" | docker login -u oauth2accesstoken --password-stdin europe-west2-docker.pkg.dev
