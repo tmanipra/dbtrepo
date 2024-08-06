@@ -46,6 +46,7 @@ jobs:
       - name: Build image
         run: |
           pwd
+          gcloud auth configure-docker europe-west2-docker.pkg.dev --quiet
           docker build . --file Dockerfile --tag europe-west2-docker.pkg.dev/global-sign-431120-i5/dbt/image:latest --build-arg PKG=autoflowx_dbt
           docker push europe-west2-docker.pkg.dev/global-sign-431120-i5/dbt/image:latest
         working-directory: ${{ github.workspace }}/autoflowx_dbt
