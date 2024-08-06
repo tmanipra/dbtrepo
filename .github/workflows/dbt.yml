@@ -51,6 +51,8 @@ jobs:
         working-directory: ${{ github.workspace }}/autoflowx_dbt
 
       - name: Push image
-        run: | 
-          gcloud config set account tfgitworkflow@global-sign-431120-i5.iam.gserviceaccount.com
+        run: |
+          gcloud auth activate-service-account --key-file=${{ env.GOOGLE_APPLICATION_CREDENTIALS }}
+          ACCESS_TOKEN=$(gcloud auth print-access-token)
+          echo $ACCESS_TOKEN | docker login -u oauth2accesstoken --password-stdin https://europe-west2-docker.pkg.dev
           docker push europe-west2-docker.pkg.dev/global-sign-431120-i5/dbt/my-image:latest
