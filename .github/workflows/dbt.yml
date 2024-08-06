@@ -52,7 +52,6 @@ jobs:
 
       - name: Push image
         run: |
-          ACCESS_TOKEN=$(gcloud auth print-access-token)
-          echo $ACCESS_TOKEN
-          echo $ACCESS_TOKEN | docker login -u oauth2accesstoken --password-stdin https://europe-west2-docker.pkg.dev
+          echo $GOOGLE_APPLICATION_CREDENTIALS
+          echo $GOOGLE_APPLICATION_CREDENTIALS | docker login -u oauth2accesstoken --password-stdin https://europe-west2-docker.pkg.dev
           docker push europe-west2-docker.pkg.dev/global-sign-431120-i5/dbt/my-image:latest
