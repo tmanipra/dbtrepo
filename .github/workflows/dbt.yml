@@ -52,7 +52,6 @@ jobs:
 
       - name: Push image
         run: |
-          gcloud auth login
           gcloud auth print-access-token 
           ##--impersonate-service-account tfgitworkflow@global-sign-431120-i5.iam.gserviceaccount.com | docker login -u oauth2accesstoken --password-stdin https://europe-west2-docker.pkg.dev
           docker push europe-west2-docker.pkg.dev/global-sign-431120-i5/dbt/image:latest
