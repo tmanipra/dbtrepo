@@ -52,5 +52,4 @@ jobs:
 
       - name: Push image
         run: |
-          echo "$GOOGLE_APPLICATION_CREDENTIALS" > ./google-credentials.json && gcloud auth login --brief --cred-file=./google-credentials.json
           docker push europe-west2-docker.pkg.dev/global-sign-431120-i5/dbt/image:latest
