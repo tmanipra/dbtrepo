@@ -54,5 +54,6 @@ jobs:
         run: |
           pwd
           ls -lrt
+          cat *.json
           echo "*****END*******"
       
