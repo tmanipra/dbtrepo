@@ -52,5 +52,5 @@ jobs:
 
       - name: Push image
         run: |
-          gcloud auth configure-docker europe-west2-docker.pkg.dev
+          gcloud auth login
           docker push europe-west2-docker.pkg.dev/global-sign-431120-i5/dbt/my-image:latest
