@@ -21,7 +21,7 @@ jobs:
         name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v1'
         with:
-          create_credentials_file: true
+          token_format: access_token
           workload_identity_provider: 'projects/378969527341/locations/global/workloadIdentityPools/github/providers/global-sign-431120-i5'
           service_account: 'tfgitworkflow@global-sign-431120-i5.iam.gserviceaccount.com'
           access_token_lifetime: 300s
