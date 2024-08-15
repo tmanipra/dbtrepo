@@ -8,6 +8,8 @@ COPY . /app
 
 RUN ls -lrt /app
 
+RUN pip install dbt-bigquery
+
 RUN chmod +x /app/script.sh
 
 # Expose the port that Cloud Run expects the container to listen on
