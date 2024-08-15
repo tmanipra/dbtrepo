@@ -13,4 +13,6 @@ RUN chmod +x /app/script.sh
 # Expose the port that Cloud Run expects the container to listen on
 ENV PORT 8080
 
+EXPOSE 8080
+
 ENTRYPOINT ["/app/script.sh"]
