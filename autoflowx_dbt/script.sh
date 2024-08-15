@@ -1,5 +1,5 @@
 #!/bin/sh
-dbt --select autoflowx --profiles-dir . --target dev
+dbt run --select autoflowx --profiles-dir . --target dev
 
 # Start a simple HTTP server to keep the container alive and comply with Cloud Run's requirements
 PORT=${PORT:-8080}  # Default to 8080 if PORT is not set
