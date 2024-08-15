@@ -39,9 +39,9 @@ jobs:
         with:
           python-version: '3.8'
 
-      - name: Install dbt
-        run: |
-          pip install dbt-bigquery
+#      - name: Install dbt
+#        run: |
+#          pip install dbt-bigquery
   
       - name: Build image
         run: |
